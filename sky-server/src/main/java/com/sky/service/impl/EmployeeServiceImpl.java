@@ -132,4 +132,29 @@ public class EmployeeServiceImpl implements EmployeeService {
         else return Result.error("数据库修改状态码失败，请联系管理员!");
     }
 
+    @Override
+    public Result editEmployee(EmployeeDTO employeeDTO) {
+        LocalDateTime now = LocalDateTime.now();
+        Long currentId = BaseContext.getCurrentId();
+        Employee employee = Employee.builder().id(employeeDTO.getId())
+                .idNumber(employeeDTO.getIdNumber())
+                .name(employeeDTO.getName())
+                .phone(employeeDTO.getPhone())
+                .sex(employeeDTO.getSex())
+                .username(employeeDTO.getUsername())
+                .updateUser(currentId)
+                .updateTime(now)
+                .build();
+        int i = employeeMapper.update(employee);
+        if (i==1){
+            return Result.success();
+        }
+        else if(i==0) {
+            return Result.error("找不到指定id用户!");
+        }
+        else {
+            return Result.error("数据库异常,请联系管理员!");
+        }
+    }
+
 }

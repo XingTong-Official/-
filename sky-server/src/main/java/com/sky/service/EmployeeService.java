@@ -21,4 +21,6 @@ public interface EmployeeService {
     Result<PageResult> pageEmployee(EmployeePageQueryDTO employeePageQueryDTO);
 
     Result stopOrStart(int status, Long id);
+
+    Result editEmployee(EmployeeDTO employeeDTO);
 }

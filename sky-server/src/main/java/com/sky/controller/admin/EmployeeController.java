@@ -97,4 +97,9 @@ public class EmployeeController {
     public Result stopOrStart(@PathVariable int status,Long id){
         return employeeService.stopOrStart(status,id);
     }
+    @PutMapping
+    @ApiOperation("编辑员工")
+    public Result editEmployee(@RequestBody EmployeeDTO employeeDTO){
+        return employeeService.editEmployee(employeeDTO);
+    }
 }
