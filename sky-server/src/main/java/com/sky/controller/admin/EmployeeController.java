@@ -93,7 +93,7 @@ public class EmployeeController {
         return employeeService.addEmployee(employeeDTO);
     }
     @PostMapping("/status/{status}")
-    @ApiOperation("启用、禁用员工账号")
+    @ApiOperation("启用禁用员工账号")
     public Result stopOrStart(@PathVariable int status,Long id){
         return employeeService.stopOrStart(status,id);
     }
