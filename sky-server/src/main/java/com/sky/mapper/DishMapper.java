@@ -6,6 +6,7 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
 import com.sky.enumeration.OperationType;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -33,4 +34,10 @@ public interface DishMapper {
 
     @Select("select * from dish_flavor where dish_id = #{id}")
     List<DishFlavor> queryFlavors(Long id);
+
+    @AutoFill(OperationType.UPDATE)
+    int updateDish(Dish dish);
+
+    @Delete("delete from dish_flavor where dish_id = #{dishId}")
+    int deleteAllFlavors(Long dishId);
 }

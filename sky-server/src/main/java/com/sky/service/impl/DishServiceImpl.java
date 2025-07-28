@@ -90,7 +90,15 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public Result editDish(DishDTO dishDTO) {
-        //TODO 还没写完，明天写，猪脑过载了
-        return null;
+        List<DishFlavor> flavors = dishDTO.getFlavors();
+        Dish dish=new Dish();
+        BeanUtils.copyProperties(dishDTO,dish);
+        for (int i =0;i<flavors.size();i++){
+            flavors.get(i).setDishId(dish.getId());
+        }
+        dishMapper.updateDish(dish);
+        dishMapper.deleteAllFlavors(dish.getId());
+        dishMapper.addFlavor(flavors);
+        return Result.success();
     }
 }
