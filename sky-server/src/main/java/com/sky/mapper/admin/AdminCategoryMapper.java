@@ -1,8 +1,7 @@
-package com.sky.mapper;
+package com.sky.mapper.admin;
 
 import com.github.pagehelper.Page;
 import com.sky.annotation.AutoFill;
-import com.sky.constant.AutoFillConstant;
 import com.sky.dto.CategoryPageQueryDTO;
 import com.sky.entity.Category;
 import com.sky.enumeration.OperationType;
@@ -11,7 +10,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface CategoryMapper {
+public interface AdminCategoryMapper {
 
     @AutoFill(OperationType.UPDATE)
     int modifyCategory(Category category);

@@ -1,13 +1,12 @@
-package com.sky.service;
+package com.sky.service.admin;
 
 import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
-import com.sky.entity.Category;
 import com.sky.entity.Employee;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 
-public interface CategoryService {
+public interface AdminCategoryService {
     Result modifyCategory(CategoryDTO categoryDTO);
 
     Result<PageResult> pageCategory(CategoryPageQueryDTO categoryPageQueryDTO);
