@@ -19,10 +19,10 @@ public interface DishMapper {
 
     int delete(List<Long> ids);
 
-    @Select("select * from sky_take_out.dish where id = #{id}")
+    @Select("select * from dish where id = #{id}")
     Dish queryDish(Long id);
 
-    @Select("select * from sky_take_out.dish where category_id = #{categoryId}")
+    @Select("select * from dish where category_id = #{categoryId}")
     List<Dish> listQueryDish(Long categoryId);
 
     int stopOrStart(Long status, Long id);

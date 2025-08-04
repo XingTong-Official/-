@@ -7,6 +7,7 @@ import com.sky.entity.Category;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
 import com.sky.enumeration.OperationType;
+import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Mapper
 public interface MealMapper {
-    Page<Setmeal> pageQueryMeal(SetmealPageQueryDTO setmealPageQueryDTO);
+    Page<SetmealVO> pageQueryMeal(SetmealPageQueryDTO setmealPageQueryDTO);
 
     @Update("update setmeal set status = #{status} where id = #{id}")
     int stopOrStart(Long status, Long id);
@@ -44,4 +45,6 @@ public interface MealMapper {
 
     @AutoFill(OperationType.UPDATE)
     void modifyMeal(Setmeal setmeal);
+
+    Category queryCategoryById();
 }

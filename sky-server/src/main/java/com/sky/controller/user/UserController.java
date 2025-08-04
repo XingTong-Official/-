@@ -46,4 +46,8 @@ public class UserController {
         userLoginVO.setToken(jwt);
         return Result.success(userLoginVO);
     }
+    @PostMapping("/logout")
+    public void logout(){
+        return;
+    }
 }

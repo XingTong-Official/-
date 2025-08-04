@@ -25,7 +25,8 @@ public class MealServiceImpl implements MealService {
     @Override
     public Result<PageResult> pageQueryMeal(SetmealPageQueryDTO setmealPageQueryDTO) {
         PageHelper.startPage(setmealPageQueryDTO.getPage(),setmealPageQueryDTO.getPageSize());
-        Page<Setmeal> setmeals = mealMapper.pageQueryMeal(setmealPageQueryDTO);
+        Page<SetmealVO> setmeals = mealMapper.pageQueryMeal(setmealPageQueryDTO);
+
 
         PageResult pageResult=new PageResult();
         pageResult.setTotal(setmeals.getTotal());

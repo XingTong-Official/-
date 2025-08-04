@@ -14,11 +14,7 @@ public class UserCategoryServiceImpl implements UserCategoryService {
     UserCategoryMapper userCategoryMapper;
     @Override
     public List query(String type) {
-        if(type.equals("1")){
-            return userCategoryMapper.queryCategory();
-        }
-        else {
-            return userCategoryMapper.querySetmeal();
-        }
+        if (type==null) return userCategoryMapper.queryAllCategory();
+        return userCategoryMapper.queryCategory(type);
     }
 }
