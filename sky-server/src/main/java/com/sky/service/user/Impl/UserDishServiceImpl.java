@@ -19,9 +19,9 @@ public class UserDishServiceImpl implements UserDishService {
     @Override
     public List<DishVO> queryDishListById(String categoryId) {
         List<DishVO> dishVOList=new ArrayList<>();
-        DishVO dishVO = new DishVO();
         List<Dish> dishList = userDishMapper.queryDish(categoryId);
         for(Dish dish:dishList){
+            DishVO dishVO = new DishVO();
             BeanUtils.copyProperties(dish,dishVO);
             List<DishFlavor> flavors = userDishMapper.queryFlavors(dish.getId());
             dishVO.setFlavors(flavors);
