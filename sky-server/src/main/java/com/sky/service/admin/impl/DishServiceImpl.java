@@ -13,6 +13,7 @@ import com.sky.service.admin.DishService;
 import com.sky.vo.DishVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,7 +23,8 @@ import java.util.List;
 public class DishServiceImpl implements DishService {
     @Autowired
     DishMapper dishMapper;
-
+    @Autowired
+    RedisTemplate redisTemplate;
     @Override
     public Result<PageResult> pageQueryDish(DishPageQueryDTO dishPageQueryDTO) {
         PageHelper.startPage(dishPageQueryDTO.getPage(),dishPageQueryDTO.getPageSize());
@@ -45,6 +47,9 @@ public class DishServiceImpl implements DishService {
             list.add(num);
         }
         int deleteNums = dishMapper.delete(list);
+        for(String id:ids){
+            redisTemplate.delete("Category_"+id);
+        }
         return Result.success();
     }
 
@@ -70,6 +75,7 @@ public class DishServiceImpl implements DishService {
     @Override
     public Result stopOrStart(Long status, Long id) {
         int i = dishMapper.stopOrStart(status,id);
+        redisTemplate.delete("Category_"+id);
         return Result.success();
     }
 
@@ -97,6 +103,7 @@ public class DishServiceImpl implements DishService {
         dishMapper.updateDish(dish);
         dishMapper.deleteAllFlavors(dish.getId());
         dishMapper.addFlavor(flavors);
+        redisTemplate.delete("Category_"+dish.getId());
         return Result.success();
     }
 }

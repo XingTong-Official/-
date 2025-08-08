@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.user.AddressBookMapper">
+    <insert id="addAddressBook">
+        insert into address_book
+        (
+        <if test="id != null">
+         id,
+        </if>
+        <if test="userId != null">
+         user_id,
+        </if>
+         consignee,
+         sex,
+         phone,
+         province_code,
+         province_name,
+         city_code,
+         city_name,
+         district_code,
+         district_name,
+         detail,
+         label
+        <if test="isDefault != null">
+         ,is_default
+        </if>
+        ) VALUES
+        (
+         <if test="id != null">
+             #{id},
+         </if>
+        <if test="userId != null">
+            #{userId},
+        </if>
+        #{consignee},
+        #{sex},
+        #{phone},
+        #{provinceCode},
+        #{provinceName},
+        #{cityCode},
+        #{cityName},
+        #{districtCode},
+        #{districtName},
+        #{detail},
+        #{label}
+        <if test="isDefault != null">
+            ,#{isDefault}
+        </if>
+        )
+    </insert>
+    <update id="modifyAddressBook">
+        update address_book
+        set
+        <if test="userId != null">
+            user_id = #{userId},
+        </if>
+        consignee = #{consignee},
+        sex = #{sex},
+        phone = #{phone},
+        province_code = #{provinceCode},
+        province_name = #{provinceName},
+        city_code = #{cityCode},
+        city_name = #{cityName},
+        district_code = #{districtCode},
+        district_name = #{districtName},
+        detail = #{detail},
+        label = #{label}
+        <if test="isDefault != null">
+            ,is_default = #{isDefault}
+        </if>
+        where id=#{id}
+    </update>
+</mapper>

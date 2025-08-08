@@ -14,6 +14,7 @@ import com.sky.service.admin.MealService;
 import com.sky.vo.SetmealVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,8 @@ import java.util.List;
 public class MealServiceImpl implements MealService {
     @Autowired
     MealMapper mealMapper;
+    @Autowired
+    RedisTemplate redisTemplate;
     @Override
     public Result<PageResult> pageQueryMeal(SetmealPageQueryDTO setmealPageQueryDTO) {
         PageHelper.startPage(setmealPageQueryDTO.getPage(),setmealPageQueryDTO.getPageSize());
@@ -37,6 +40,7 @@ public class MealServiceImpl implements MealService {
     @Override
     public Result stopOrStart(Long status, Long id) {
         int i = mealMapper.stopOrStart(status, id);
+//        redisTemplate.delete("Category_"+id);
         return Result.success();
     }
 
@@ -49,6 +53,9 @@ public class MealServiceImpl implements MealService {
 //            list.add(Long.parseLong(split[i]));
 //        }
         mealMapper.deleteAll(split);
+//        for (String s:split){
+//            redisTemplate.delete("Category_"+s);
+//        }
         return Result.success();
     }
 
@@ -74,9 +81,9 @@ public class MealServiceImpl implements MealService {
         mealMapper.addMeal(setmeal);
 
         List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
-        for (int i=0;i<setmealDishes.size();i++){
-            setmealDishes.get(i).setSetmealId(setmeal.getId());
-        }
+//        for (int i=0;i<setmealDishes.size();i++){
+//            setmealDishes.get(i).setSetmealId(setmeal.getId());
+//        }
         mealMapper.addMealDish(setmealDishes);
 
         return Result.success();
@@ -96,6 +103,7 @@ public class MealServiceImpl implements MealService {
         mealMapper.addMealDish(setmealDishes);
 
         mealMapper.modifyMeal(setmeal);
+//        redisTemplate.delete("Category_"+setmeal.getId());
         return Result.success();
     }
 }

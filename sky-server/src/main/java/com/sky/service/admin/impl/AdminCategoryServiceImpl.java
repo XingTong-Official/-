@@ -13,6 +13,7 @@ import com.sky.result.Result;
 import com.sky.service.admin.AdminCategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,8 @@ import java.util.List;
 public class AdminCategoryServiceImpl implements AdminCategoryService {
     @Autowired
     AdminCategoryMapper adminCategoryMapper;
+    @Autowired
+    RedisTemplate redisTemplate;
     @Override
     public Result modifyCategory(CategoryDTO categoryDTO) {
         Category category = new Category();
@@ -32,6 +35,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
 //        category.setUpdateTime(LocalDateTime.now());
 //        category.setUpdateUser(BaseContext.getCurrentId());
         int i = adminCategoryMapper.modifyCategory(category);
+        redisTemplate.delete("Category_"+category.getId());
         if(i==1) {
             return Result.success();
         }
@@ -62,6 +66,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     @Override
     public Result stopOrStart(Long status, Long id) {
         int i = adminCategoryMapper.stopOrStart(status, id);
+        redisTemplate.delete("Category_"+id);
         if(i==1) return Result.success();
         else return Result.error("数据库未查询到相关数据");
     }
@@ -85,6 +90,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     @Override
     public Result deleteCategory(Long id) {
         int i = adminCategoryMapper.deleteCategory(id);
+        redisTemplate.delete("Category_"+id);
         if(i != 0) return Result.success();
         else return Result.error("数据库中不存在该数据");
     }
